@@ -9,10 +9,15 @@ def main():
     pygame.init()
     clock = pygame.time.Clock()
     dt = 0
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    Player.containers = (updateable, drawable)
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     keys = list()
     run = True
+
+    
 
     while run:
         screen.fill("black")
@@ -24,8 +29,13 @@ def main():
         if keys[pygame.K_ESCAPE]:
             run = False
 
-        player.update(dt)    
-        player.draw(screen)
+        updateable.update(dt)
+
+        for item in drawable:
+            item.draw(screen)
+
+        #player.update(dt)    
+        #player.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) /1000                            
 
